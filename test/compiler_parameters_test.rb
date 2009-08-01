@@ -9,5 +9,9 @@ class CompilerParametersTest < Test::Unit::TestCase
     should "not generate an executable" do
       assert !@params.generate_executable
     end
+    
+    should "not treat warning as errors" do
+      assert !@params.treat_warnings_as_errors
+    end
   end
 end
