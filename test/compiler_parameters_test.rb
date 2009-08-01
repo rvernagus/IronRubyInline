@@ -13,5 +13,9 @@ class CompilerParametersTest < Test::Unit::TestCase
     should "not treat warning as errors" do
       assert !@params.treat_warnings_as_errors
     end
+    
+    should "have expected compiler options" do
+      assert_equal "/optimize", @params.compiler_options
+    end
   end
 end
