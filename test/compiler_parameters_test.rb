@@ -3,7 +3,7 @@ require 'test_helper'
 class CompilerParametersTest < Test::Unit::TestCase
   context "default" do
     setup do
-      @params = CompilerParameters.new
+      @params = IronRubyInline::CompilerParameters.new
     end
     
     should "not generate an executable" do

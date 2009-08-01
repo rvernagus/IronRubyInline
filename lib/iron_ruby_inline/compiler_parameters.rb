@@ -1,5 +1,7 @@
 module IronRubyInline
-  class CompilerParameters
-    attr_accessor :generate_executable
+  class CompilerParameters < System::CodeDom::Compiler::CompilerParameters
+    def initialize
+      self.generate_executable = false
+    end
   end
 end
