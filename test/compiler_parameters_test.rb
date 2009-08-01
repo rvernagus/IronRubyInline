@@ -22,8 +22,19 @@ class CompilerParametersTest < Test::Unit::TestCase
       assert_equal "output", @params.output_assembly
     end
     
-    should "specify no referenced assemblies" do
+    should "not specify referenced assemblies" do
       assert_has 0, @params.referenced_assemblies
+    end
+  end
+  
+  context "with reference" do
+    setup do
+      @params = IronRubyInline::CompilerParameters.new("output", ["reference1"])
+    end
+    
+    should "add reference" do
+      assert_has 1, @params.referenced_assemblies
+      assert_equal "reference1", @params.referenced_assemblies[0]
     end
   end
 end
