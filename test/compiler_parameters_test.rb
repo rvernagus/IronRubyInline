@@ -27,7 +27,7 @@ class CompilerParametersTest < Test::Unit::TestCase
     end
   end
   
-  context "with reference" do
+  context "with single reference" do
     setup do
       @params = IronRubyInline::CompilerParameters.new("output", ["reference1"])
     end
@@ -35,6 +35,18 @@ class CompilerParametersTest < Test::Unit::TestCase
     should "add reference" do
       assert_has 1, @params.referenced_assemblies
       assert_equal "reference1", @params.referenced_assemblies[0]
+    end
+  end
+  
+  context "with multiple references" do
+    setup do
+      @params = IronRubyInline::CompilerParameters.new("output", ["reference1", "reference2"])
+    end
+    
+    should "add references" do
+      assert_has 2, @params.referenced_assemblies
+      assert_equal "reference1", @params.referenced_assemblies[0]
+      assert_equal "reference2", @params.referenced_assemblies[1]
     end
   end
 end
