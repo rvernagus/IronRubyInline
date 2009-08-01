@@ -21,5 +21,9 @@ class CompilerParametersTest < Test::Unit::TestCase
     should "set output assembly" do
       assert_equal "output", @params.output_assembly
     end
+    
+    should "specify no referenced assemblies" do
+      assert_has 0, @params.referenced_assemblies
+    end
   end
 end
