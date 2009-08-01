@@ -3,7 +3,7 @@ require 'test_helper'
 class CompilerParametersTest < Test::Unit::TestCase
   context "default" do
     setup do
-      @params = IronRubyInline::CompilerParameters.new
+      @params = IronRubyInline::CompilerParameters.new("output")
     end
     
     should "not generate an executable" do
@@ -16,6 +16,10 @@ class CompilerParametersTest < Test::Unit::TestCase
     
     should "have expected compiler options" do
       assert_equal "/optimize", @params.compiler_options
+    end
+    
+    should "set output assembly" do
+      assert_equal "output", @params.output_assembly
     end
   end
 end

@@ -3,7 +3,7 @@ module System
     module Compiler
       class CompilerParameters
         attr_accessor :generate_executable, :treat_warnings_as_errors,
-                      :compiler_options
+                      :compiler_options, :output_assembly
         
         def initialize
           @treat_warnings_as_errors = true
