@@ -15,39 +15,57 @@ class CompilerParametersTest < Test::Unit::TestCase
     end
     
     context "to_clr_parameters" do
-      should "set parameters to expected values" do
-        mock_clr_parameters = flexmock("CLR Parameters")
+      setup do
+        @mock_clr_parameters = flexmock("CLR Parameters")
+        @mock_clr_parameters.should_ignore_missing
         
         flexmock(IronRubyInline::ClrObjectFactory).
-          should_receive(:create_compiler_parameters => mock_clr_parameters).
+          should_receive(:create_compiler_parameters => @mock_clr_parameters).
           once
-       
-        mock_clr_parameters.
+      end
+
+      should "return CLR parameters" do
+        result = @params.to_clr_parameters
+        assert_same result, @mock_clr_parameters
+      end
+      
+      should "not generate executable" do
+        @mock_clr_parameters.
           should_receive(:generate_executable=).
           once.
           with(false)
-          
-        mock_clr_parameters.
+        @params.to_clr_parameters
+      end
+      
+      should "not treat warnings as errors" do
+        @mock_clr_parameters.
           should_receive(:treat_warnings_as_errors=).
           once.
           with(false)
-          
-        mock_clr_parameters.
+        @params.to_clr_parameters
+      end
+      
+      should "set expected compiler options" do
+        @mock_clr_parameters.
           should_receive(:compiler_options=).
           once.
           with("/optimize")
-
-        mock_clr_parameters.
+        @params.to_clr_parameters
+      end
+      
+      should "set expected output assembly" do
+        @mock_clr_parameters.
           should_receive(:output_assembly=).
           once.
           with("output")
-        
-        mock_clr_parameters.
+        @params.to_clr_parameters
+      end
+      
+      should "not add referenced assemblies" do
+        @mock_clr_parameters.
           should_receive("referenced_assemblies.add").
           never
-          
-        result = @params.to_clr_parameters
-        assert_same result, mock_clr_parameters
+        @params.to_clr_parameters
       end
     end
   end
@@ -66,19 +84,20 @@ class CompilerParametersTest < Test::Unit::TestCase
     end
 
     context "to_clr_parameters" do
-      should "set parameters to expected values" do
-        mock_clr_parameters = flexmock("CLR Parameters")
-        mock_clr_parameters.should_ignore_missing
+      setup do
+        @mock_clr_parameters = flexmock("CLR Parameters")
+        @mock_clr_parameters.should_ignore_missing
         
         flexmock(IronRubyInline::ClrObjectFactory).
-          should_receive(:create_compiler_parameters => mock_clr_parameters).
+          should_receive(:create_compiler_parameters => @mock_clr_parameters).
           once
-        
-        mock_clr_parameters.
+      end
+      
+      should "add reference assembly" do
+        @mock_clr_parameters.
           should_receive("referenced_assemblies.add").
           once.
           with("reference1")
-          
         @params.to_clr_parameters
       end
     end
@@ -98,24 +117,24 @@ class CompilerParametersTest < Test::Unit::TestCase
     end
     
     context "to_clr_parameters" do
-      should "set parameters to expected values" do
-        mock_clr_parameters = flexmock("CLR Parameters")
-        mock_clr_parameters.should_ignore_missing
+      setup do
+        @mock_clr_parameters = flexmock("CLR Parameters")
+        @mock_clr_parameters.should_ignore_missing
         
         flexmock(IronRubyInline::ClrObjectFactory).
-          should_receive(:create_compiler_parameters => mock_clr_parameters).
+          should_receive(:create_compiler_parameters => @mock_clr_parameters).
           once
+      end
         
-        mock_clr_parameters.
+      should "add referenced assemblies" do
+        @mock_clr_parameters.
           should_receive("referenced_assemblies.add").
           once.
           with("reference1")
-          
-        mock_clr_parameters.
+        @mock_clr_parameters.
           should_receive("referenced_assemblies.add").
           once.
           with("reference2")
-          
         @params.to_clr_parameters
       end
     end
