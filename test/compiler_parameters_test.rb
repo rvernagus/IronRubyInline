@@ -10,7 +10,7 @@ class CompilerParametersTest < Test::Unit::TestCase
       assert !@params.generate_executable
     end
     
-    should "not treat warning as errors" do
+    should "not treat warnings as errors" do
       assert !@params.treat_warnings_as_errors
     end
     
