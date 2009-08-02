@@ -84,18 +84,45 @@ class CompilerTest < Test::Unit::TestCase
       assert_same :expected, @compiler.provider("fsharp")
     end
 
-    should "return F# provider for :cs" do
+    should "return F# provider for :fs" do
       flexmock(IronRubyInline::ClrObjectFactory).
         should_receive(:create_fsharp_provider => :expected).
         once
       assert_same :expected, @compiler.provider(:fs)
     end
     
-    should "return F# provider for :csharp" do
+    should "return F# provider for :fsharp" do
       flexmock(IronRubyInline::ClrObjectFactory).
         should_receive(:create_fsharp_provider => :expected).
         once
       assert_same :expected, @compiler.provider(:fsharp)
+    end
+    
+    should "not be case-sensitive for C# provider" do
+      flexmock(IronRubyInline::ClrObjectFactory).
+        should_receive(:create_csharp_provider => :expected).
+        once
+      assert_same :expected, @compiler.provider("CS")
+    end
+    
+    should "not be case-sensitive for VB provider" do
+      flexmock(IronRubyInline::ClrObjectFactory).
+        should_receive(:create_vb_provider => :expected).
+        once
+      assert_same :expected, @compiler.provider("VB")
+    end
+    
+    should "not be case-sensitive for F# provider" do
+      flexmock(IronRubyInline::ClrObjectFactory).
+        should_receive(:create_fsharp_provider => :expected).
+        once
+      assert_same :expected, @compiler.provider("FS")
+    end
+    
+    should "raise ArgumentError for unkown language" do
+      assert_raise ArgumentError do
+        @compiler.provider("unkown language")
+      end
     end
   end
   
