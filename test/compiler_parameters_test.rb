@@ -3,11 +3,15 @@ require "test_helper"
 class CompilerParametersTest < Test::Unit::TestCase
   context "default" do
     setup do
-      @params = IronRubyInline::CompilerParameters.new("output")
+      flexmock(IronRubyInline::Path).
+        should_receive(:tmpdll).
+        once.
+        and_return("tmpdllpath")
+      @params = IronRubyInline::CompilerParameters.new
     end
     
     should "have expected output" do
-      assert_equal "output", @params.output
+      assert_equal "tmpdllpath", @params.output
     end
 
     should "have empty references" do
@@ -57,7 +61,7 @@ class CompilerParametersTest < Test::Unit::TestCase
         @mock_clr_parameters.
           should_receive(:output_assembly=).
           once.
-          with("output")
+          with("tmpdllpath")
         @params.to_clr_parameters
       end
       
