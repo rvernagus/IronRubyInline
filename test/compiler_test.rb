@@ -33,5 +33,24 @@ class CompilerTest < Test::Unit::TestCase
         assert_equal :result, result
       end
     end
+    
+    context "load" do
+      setup do
+        flexmock(Kernel).
+          should_receive(:require).
+          once.
+          with("assembly_path")        
+        @mock_results = flexmock(:path_to_assembly => "assembly_path")
+      end
+      
+      should "load from path_to_assembly" do
+        @compiler.load(@mock_results)
+      end
+      
+      should "return path to loaded assembly" do
+        result = @compiler.load(@mock_results)
+        assert_equal "assembly_path", result
+      end
+    end
   end
 end
