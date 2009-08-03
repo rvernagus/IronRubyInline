@@ -4,13 +4,8 @@ module IronRubyInline
       @provider = CodeProvider.new(language)
     end
     
-    def compile(code, options={})
-      output = options[:output] || Path.tmpfile
-      puts " output >>>>>>>> #{output.inspect}"
-      references = options[:references] || []
-      parameters = CompilerParameters.new(output, references)
-      
-      @provider.compile_assembly_from_source(parameters.to_clr_parameters, code)
+    def compile(code, parameters)
+      @provider.compile_code(code, parameters.to_clr_parameters)
     end
   end
 end
