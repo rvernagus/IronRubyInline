@@ -8,8 +8,8 @@ Allows C#, F#, and Visual Basic code to be compiled inline with IronRuby code.
   require 'iron_ruby_inline'
 
 == examples
-  
-%Q{
+
+<pre><code>%Q{
 public class CsCat
 {
     public void Greet()
@@ -30,7 +30,7 @@ type Cat() =
 }.compile(:language => :fs)
 
 fscat = Lolz::Cat.new
-fscat.greet # Hai u!
+fscat.greet # Hai u!</code></pre>
 
 == Copyright
 
