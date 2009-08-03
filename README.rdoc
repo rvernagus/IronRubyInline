@@ -1,0 +1,37 @@
+= IronRubyInline
+
+Allows C#, F#, and Visual Basic code to be compiled inline with IronRuby code.
+
+== usage
+  
+  gem 'iron_ruby_inline'
+  require 'iron_ruby_inline'
+
+== examples
+  
+%Q{
+public class CsCat
+{
+    public void Greet()
+    {
+        System.Console.WriteLine("Hai  u!");
+    }
+}
+}.compile
+
+cscat = CsCat.new
+cscat.greet # Hai u!
+
+%Q{
+namespace Lolz
+type Cat() =
+    member this.Greet() =
+        printfn "Hai u!"
+}.compile(:language => :fs)
+
+fscat = Lolz::Cat.new
+fscat.greet # Hai u!
+
+== Copyright
+
+Copyright (c) 2009 Ray Vernagus. See LICENSE for details.
