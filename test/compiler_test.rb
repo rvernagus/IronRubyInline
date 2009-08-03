@@ -52,5 +52,20 @@ class CompilerTest < Test::Unit::TestCase
         assert_equal "assembly_path", result
       end
     end
+    
+    context "compile_and_load" do
+      should "chain calls to compile and load" do
+        flexmock(@compiler).
+          should_receive(:compile).
+          once.
+          with("code", :parameters).
+          and_return(:results)
+        flexmock(@compiler).
+          should_receive(:load).
+          once.
+          with(:results)
+        @compiler.compile_and_load("code", :parameters)
+      end
+    end
   end
 end

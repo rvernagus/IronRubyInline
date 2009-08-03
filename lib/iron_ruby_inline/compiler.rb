@@ -12,5 +12,10 @@ module IronRubyInline
       Kernel.require results.path_to_assembly
       results.path_to_assembly
     end
+    
+    def compile_and_load(code, parameters=CompilerParameters.new)
+      results = compile(code, parameters)
+      load results
+    end
   end
 end
