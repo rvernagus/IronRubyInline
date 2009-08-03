@@ -5,7 +5,9 @@ module IronRubyInline
     end
     
     def compile(code, parameters)
-      @provider.compile_code(code, parameters.to_clr_parameters)
+      use @provider do |p|
+        p.compile_code(code, parameters.to_clr_parameters)
+      end
     end
     
     def load(results)

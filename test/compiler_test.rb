@@ -22,6 +22,8 @@ class CompilerTest < Test::Unit::TestCase
           once.
           with(:clr_parameters, "code")   .
           and_return(:result)
+        @mock_provider.
+          should_receive(:dispose)
       end
       
       should "call compile_code on provider with expected args" do
