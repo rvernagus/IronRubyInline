@@ -2,9 +2,8 @@ module IronRubyInline
   class CompilerParameters
     attr_reader :output, :references, :language
 
-    def initialize(output, language=:cs, references=[])
+    def initialize(output, references=[])
       @output     = output
-      @language   = language
       @references = references
     end
     

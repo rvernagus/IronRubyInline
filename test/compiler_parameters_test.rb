@@ -14,10 +14,6 @@ class CompilerParametersTest < Test::Unit::TestCase
       assert_equal [], @params.references
     end
     
-    should "default to C#" do
-      assert_equal :cs, @params.language
-    end
-    
     context "to_clr_parameters" do
       setup do
         @mock_clr_parameters = flexmock("CLR Parameters")
@@ -76,7 +72,7 @@ class CompilerParametersTest < Test::Unit::TestCase
 
   context "with single reference" do
     setup do
-      @params = IronRubyInline::CompilerParameters.new("output", :cs, ["reference1"])
+      @params = IronRubyInline::CompilerParameters.new("output", ["reference1"])
     end
     
     should "have expected output" do
@@ -109,7 +105,7 @@ class CompilerParametersTest < Test::Unit::TestCase
 
   context "with multiple references" do
     setup do
-      @params = IronRubyInline::CompilerParameters.new("output", :cs, ["reference1", "reference2"])
+      @params = IronRubyInline::CompilerParameters.new("output", ["reference1", "reference2"])
     end
     
     should "have expected output" do
