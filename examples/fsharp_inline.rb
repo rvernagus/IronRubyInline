@@ -9,4 +9,4 @@ type Cat() =
 }.compile(:language => :fs)
 
 cat = Lolz::Cat.new
-cat.greet
+cat.greet # Hai u!
