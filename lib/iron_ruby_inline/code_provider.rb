@@ -15,6 +15,10 @@ module IronRubyInline
       end
     end
     
+    def compile_code(code, parameters)
+      inner_provider.compile_assembly_from_source(parameters, code)
+    end
+    
     def dispose
       inner_provider.dispose
     end

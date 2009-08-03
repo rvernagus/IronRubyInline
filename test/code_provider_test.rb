@@ -19,6 +19,14 @@ class CodeProviderTest < Test::Unit::TestCase
         once
       @provider.dispose
     end
+    
+    should "call expected method on inner provider in compile_code" do
+      @mock_provider.
+        should_receive(:compile_assembly_from_source).
+        with("code", :params).
+        once
+      @provider.compile_code(:params, "code")
+    end
   end
       
   context "default" do
