@@ -9,28 +9,28 @@ Allows C#, F#, and Visual Basic code to be compiled inline with IronRuby code.
 
 == examples
 
-<pre><code>%Q{
-public class CsCat
-{
-    public void Greet()
-    {
-        System.Console.WriteLine("Hai  u!");
-    }
-}
-}.compile
-
-cscat = CsCat.new
-cscat.greet # Hai u!
-
-%Q{
-namespace Lolz
-type Cat() =
-    member this.Greet() =
-        printfn "Hai u!"
-}.compile(:language => :fs)
-
-fscat = Lolz::Cat.new
-fscat.greet # Hai u!</code></pre>
+  %Q{
+  public class CsCat
+  {
+      public void Greet()
+      {
+          System.Console.WriteLine("Hai  u!");
+      }
+  }
+  }.compile
+  
+  cscat = CsCat.new
+  cscat.greet # Hai u!
+  
+  %Q{
+  namespace Lolz
+  type Cat() =
+      member this.Greet() =
+          printfn "Hai u!"
+  }.compile(:language => :fs)
+  
+  fscat = Lolz::Cat.new
+  fscat.greet # Hai u!
 
 == Copyright
 
