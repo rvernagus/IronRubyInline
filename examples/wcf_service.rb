@@ -21,23 +21,14 @@ public interface IService
 }
  
 [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
-public class Service : IService
-{
-  public virtual string EchoWithGet(string s)
-  {
-      return s;
-  }
-  public virtual string EchoWithPost(string s)
-  {
-      return s;
-  }
-}
+public class SingletonService { }
 }.compile(:references => [
   "#{ENV['ProgramFiles']}\\Reference Assemblies\\Microsoft\\Framework\\v3.0\\System.ServiceModel.dll",
   "#{ENV['ProgramFiles']}\\Reference Assemblies\\Microsoft\\Framework\\v3.5\\System.ServiceModel.Web.dll"
 ])
  
-class RService < Service
+class RService < SingletonService
+  include IService
   include System
   include System::ServiceModel
   include System::ServiceModel::Description
