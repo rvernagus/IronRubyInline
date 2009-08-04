@@ -2,12 +2,12 @@
 
 Allows C#, F#, and Visual Basic code to be compiled inline with IronRuby code.
 
-== usage
+== Usage
   
   gem 'iron_ruby_inline'
   require 'iron_ruby_inline'
 
-== examples
+== Examples
 
   %Q{
   public class CsCat
