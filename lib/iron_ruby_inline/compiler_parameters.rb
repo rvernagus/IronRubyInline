@@ -1,6 +1,6 @@
 module IronRubyInline
   class CompilerParameters
-    attr_reader :output, :references, :language
+    attr_accessor :output, :references
 
     def initialize(output=nil, references=[])
       @output     = output || Path.tmpdll
