@@ -27,7 +27,7 @@ public class SingletonService { }
   "#{ENV['ProgramFiles']}\\Reference Assemblies\\Microsoft\\Framework\\v3.5\\System.ServiceModel.Web.dll"
 ])
  
-class RService < SingletonService
+class IronRubyService < SingletonService
   include IService
   include System
   include System::ServiceModel
@@ -44,7 +44,7 @@ class RService < SingletonService
   
   def open(uri)
     uri = Uri.new(uri)
-    host = WebServiceHost.new(RService.new, uri)
+    host = WebServiceHost.new(IronRubyService.new, uri)
     m = host.description.behaviors.method(:find).of(ServiceDebugBehavior)
     debug_behavior = m.call
     debug_behavior.http_help_page_enabled = false
@@ -60,6 +60,6 @@ class RService < SingletonService
   end
 end
  
-RService.open("http://localhost:8000")
+IronRubyService.open("http://localhost:8000")
 puts "Press enter to exit..."
 gets
