@@ -28,21 +28,27 @@ class CompilerTest < Test::Unit::TestCase
       end
       
       should "call compile_code on provider with expected args" do
+        @mock_results.
+          should_receive("errors" => nil)
         @compiler.compile("code", @mock_parameters)
       end
       
       should "return compile results" do
+        @mock_results.
+          should_receive("errors" => nil)
         result = @compiler.compile("code", @mock_parameters)
         assert_same @mock_results, result
       end
       
-      #should "raise CompileException when errors" do
-      #  @mock_results.
-      #    should_receive("errors").
-      #    once.
-      #    and_return("error")
-      #  assert_
-      #end
+      should "raise CompileError when errors" do
+        @mock_results.
+          should_receive("errors").
+          once.
+          and_return(["error"])
+        assert_raise IronRubyInline::CompileError do
+          @compiler.compile("code", @mock_parameters)
+        end
+      end
     end
     
     context "load" do
