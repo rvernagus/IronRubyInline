@@ -1,3 +1,3 @@
 module IronRubyInline
-  class CompileError < Exception; end
+  class CompileError < StandardError; end
 end
