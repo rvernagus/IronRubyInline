@@ -23,5 +23,9 @@ class KernelTest < Test::Unit::TestCase
       result = use(@mock_disposable) { expected }
       assert_same result, expected
     end
+    
+    should "ensure dispose" do
+      use(@mock_disposable) { raise "BOOM" } rescue RuntimeError
+    end
   end
 end

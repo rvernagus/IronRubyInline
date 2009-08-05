@@ -13,6 +13,7 @@ class CompilerTest < Test::Unit::TestCase
     
     context "compile" do
       setup do
+        @mock_results = flexmock("CompilerResults")
         @mock_parameters.
           should_receive(:to_clr_parameters).
           once.
@@ -21,7 +22,7 @@ class CompilerTest < Test::Unit::TestCase
           should_receive(:compile_assembly_from_source).
           once.
           with(:clr_parameters, "code")   .
-          and_return(:result)
+          and_return(@mock_results)
         @mock_provider.
           should_receive(:dispose)
       end
@@ -32,8 +33,16 @@ class CompilerTest < Test::Unit::TestCase
       
       should "return compile results" do
         result = @compiler.compile("code", @mock_parameters)
-        assert_equal :result, result
+        assert_same @mock_results, result
       end
+      
+      #should "raise CompileException when errors" do
+      #  @mock_results.
+      #    should_receive("errors").
+      #    once.
+      #    and_return("error")
+      #  assert_
+      #end
     end
     
     context "load" do
