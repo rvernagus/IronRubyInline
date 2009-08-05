@@ -49,6 +49,19 @@ class CompilerTest < Test::Unit::TestCase
           @compiler.compile("code", @mock_parameters)
         end
       end
+      
+      should "return expected error message" do
+        @mock_results.
+          should_receive("errors").
+          once.
+          and_return(["error1", "error2"])
+        begin
+          @compiler.compile("code", @mock_parameters)
+          flunk "CompileError was expected"
+        rescue IronRubyInline::CompileError => err
+          assert_equal "error1\nerror2", err.message
+        end
+      end
     end
     
     context "load" do

@@ -7,7 +7,10 @@ module IronRubyInline
     def compile(code, parameters)
       use @provider do |p|
         results = p.compile_code(code, parameters.to_clr_parameters)
-        raise CompileError if results.errors
+        if errors = results.errors
+          message = errors.join("\n")
+          raise CompileError.new(message)
+        end
         results
       end
     end
