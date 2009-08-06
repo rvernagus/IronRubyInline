@@ -11,9 +11,9 @@ class CompilerTest < Test::Unit::TestCase
       @compiler = IronRubyInline::Compiler.new
     end
     
-    context "compile" do
+    context "compile without errors" do
       setup do
-        @mock_results = flexmock("CompilerResults")
+        @mock_results = flexmock("CompilerResults", :errors => [])
         @mock_parameters.
           should_receive(:to_clr_parameters).
           once.
@@ -39,22 +39,37 @@ class CompilerTest < Test::Unit::TestCase
         result = @compiler.compile("code", @mock_parameters)
         assert_same @mock_results, result
       end
+
+      should "not raise CompileError when no errors" do
+        assert_nothing_raised do
+          @compiler.compile("code", @mock_parameters)
+        end
+      end
+    end
+
+    context "compile with errors" do
+      setup do
+        @mock_results = flexmock("CompilerResults", :errors => ["error1", "error2"])
+        @mock_parameters.
+          should_receive(:to_clr_parameters).
+          once.
+          and_return(:clr_parameters)
+        @mock_provider.
+          should_receive(:compile_assembly_from_source).
+          once.
+          with(:clr_parameters, "code")   .
+          and_return(@mock_results)
+        @mock_provider.
+          should_receive(:dispose)
+      end
       
       should "raise CompileError when errors" do
-        @mock_results.
-          should_receive("errors").
-          once.
-          and_return(["error"])
         assert_raise IronRubyInline::CompileError do
           @compiler.compile("code", @mock_parameters)
         end
       end
       
       should "return expected error message" do
-        @mock_results.
-          should_receive("errors").
-          once.
-          and_return(["error1", "error2"])
         begin
           @compiler.compile("code", @mock_parameters)
           flunk "CompileError was expected"
