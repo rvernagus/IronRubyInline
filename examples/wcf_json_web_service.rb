@@ -1,3 +1,10 @@
+#EXAMPLE POST MESSAGE:
+#POST /EchoWithPost HTTP/1.1
+#Content-Type: application/json; charset=utf-8
+#Host: localhost:8000
+#Content-Length: 15
+#
+#"Hi, IronRuby!"
 require "../lib/iron_ruby_inline"
 require "System.ServiceModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
 require "System.ServiceModel.Web, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
@@ -12,11 +19,11 @@ using System.ServiceModel.Web;
 public interface IService
 {
     [OperationContract]
-    [WebGet]
+    [WebGet(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
     string EchoWithGet(string s);
   
     [OperationContract]
-    [WebInvoke]
+    [WebInvoke(RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
     string EchoWithPost(string s);
 }
  
@@ -35,11 +42,11 @@ class IronRubyService < SingletonService
   include System::ServiceModel::Web
   
   def echo_with_get(s)
-    "GET you said #{s}"
+    "You said #{s} using HTTP GET"
   end
   
   def echo_with_post(s)
-    "POST you said #{s}"
+    "You said #{s} using HTTP POST"
   end
   
   def open(uri)
