@@ -51,7 +51,7 @@ class IronRubyService < SingletonService
   
   def open(uri)
     uri = Uri.new(uri)
-    host = WebServiceHost.new(IronRubyService.new, uri)
+    host = WebServiceHost.new(self, uri)
     m = host.description.behaviors.method(:find).of(ServiceDebugBehavior)
     debug_behavior = m.call
     debug_behavior.http_help_page_enabled = false
